@@ -1,0 +1,16 @@
+{
+  "name": "Summit Notes",
+  "short_name": "Notes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f2e8",
+  "theme_color": "#184e77",
+  "icons": [
+    {
+      "src": "/notes-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
