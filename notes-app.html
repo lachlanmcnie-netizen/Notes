@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#184e77">
+  <link rel="manifest" href="notes-manifest.webmanifest">
+  <link rel="icon" href="notes-icon.svg" type="image/svg+xml">
+  <title>Summit Notes</title>
+  <link rel="stylesheet" href="notes-app.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="notes-cloud-config.js"></script>
+  <script src="notes-auth.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <p class="eyebrow">Summit Notes</p>
+        <h1>Simple notes that stay in sync.</h1>
+        <p class="subtle" id="userSummary">Loading your shared notebook...</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="button-link secondary" href="summary.html">Summary</a>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel composer-panel collapsed" id="composerPanel">
+        <div class="panel-header compact-header">
+          <div>
+            <p class="eyebrow">Add note</p>
+            <h2 id="composerHeading">Quick note</h2>
+          </div>
+          <div class="panel-actions">
+            <button id="toggleComposerButton" type="button">Add note</button>
+            <button class="secondary hidden" id="cancelEditButton" type="button">Cancel edit</button>
+          </div>
+        </div>
+
+        <form id="noteForm" class="form-stack hidden">
+          <div class="editor-toolbar">
+            <span class="toolbar-label">Bullet helpers</span>
+            <button class="secondary" id="addBulletButton" type="button">Add bullet</button>
+            <button class="secondary" id="addChecklistLineButton" type="button">Add checklist line</button>
+          </div>
+
+          <label for="noteBody">Note</label>
+          <textarea id="noteBody" rows="7" placeholder="- Pick up groceries&#10;- Call the mechanic&#10;- Book dinner" required></textarea>
+
+          <div class="form-row">
+            <div class="field-group">
+              <label for="notePriority">Priority tier</label>
+              <select id="notePriority">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="noteDueDate">Due date</label>
+              <input id="noteDueDate" type="date">
+            </div>
+          </div>
+
+          <div class="form-row actions-row">
+            <label class="checkbox-wrap" for="noteCompleted">
+              <input id="noteCompleted" type="checkbox">
+              Mark as completed
+            </label>
+            <button type="submit" id="saveNoteButton">Save note</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel notes-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Notebook</p>
+            <h2>Organised notes</h2>
+          </div>
+          <div class="summary-pills">
+            <span class="pill" id="totalNotesPill">0 notes</span>
+            <span class="pill priority-high" id="highPriorityPill">0 high priority</span>
+          </div>
+        </div>
+
+        <div class="controls-bar">
+          <div class="control-group">
+            <label for="sortMode">Sort by</label>
+            <select id="sortMode">
+              <option value="priority">Priority tiers</option>
+              <option value="due-date">Due date</option>
+              <option value="date-added">Date added</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="sortDirection">Direction</label>
+            <select id="sortDirection">
+              <option value="asc">Ascending</option>
+              <option value="desc" selected>Descending</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="statusFilter">Show</label>
+            <select id="statusFilter">
+              <option value="all">All notes</option>
+              <option value="open">Open notes</option>
+              <option value="completed">Completed notes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="notes-list" id="notesList"></div>
+        <div class="empty-state hidden" id="emptyState">
+          <p class="message" id="emptyMessage">No notes yet.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <button class="floating-add-button" id="floatingAddButton" type="button">+ Note</button>
+  <div class="mobile-sheet-backdrop hidden" id="mobileSheetBackdrop"></div>
+  <div class="toast-stack" id="toastStack"></div>
+
+  <script src="notes-app.js"></script>
+</body>
+</html>
